@@ -9,4 +9,7 @@ export const siteConfig = {
       href: '/',
     },
   ],
+  links: {
+    github: 'https://github.com/maxbarsukov/sleepy',
+  },
 };
