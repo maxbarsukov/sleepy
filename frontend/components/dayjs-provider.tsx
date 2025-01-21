@@ -29,19 +29,19 @@ export function DayjsProvider({ children }: DayjsProviderProps) {
 
   dayjs.updateLocale('ru', {
     calendar: {
-      lastWeek: 'D MMMM, в hh:mm',
-      sameDay: 'Сегодня, в hh:mm',
-      lastDay: 'Вчера, в hh:mm',
-      sameElse: 'DD.MM.YYYY, в hh:mm',
+      lastWeek: 'D MMMM, в HH:mm',
+      sameDay: 'Сегодня, в HH:mm',
+      lastDay: 'Вчера, в HH:mm',
+      sameElse: 'DD.MM.YYYY, в HH:mm',
     },
   });
 
   dayjs.updateLocale('en', {
     calendar: {
-      lastWeek: 'D MMMM[, at] hh:mm',
-      sameDay: '[ Today, at] hh:mm',
-      lastDay: '[ Yesterday, at] hh:mm',
-      sameElse: 'DD.MM.YYYY[, at] hh:mm',
+      lastWeek: 'D MMMM[, at] hh:mm A',
+      sameDay: '[ Today, at] hh:mm A',
+      lastDay: '[ Yesterday, at] hh:mm A',
+      sameElse: 'DD.MM.YYYY[, at] hh:mm A',
     },
   });
 

@@ -25,6 +25,16 @@ export default function SleepsListView() {
     });
   };
 
+  const getTimeEmoji = (timestamp: string) => {
+    const hour = dayjs(timestamp).hour();
+    if (hour >= 5 && hour < 8) return '🌅';
+    if (hour >= 8 && hour < 12) return '🌄';
+    if (hour >= 12 && hour < 17) return '🌇';
+    if (hour >= 17 && hour < 20) return '🌆';
+    if (hour >= 20 && hour < 23) return '🌃';
+    return '🌌';
+  };
+
   const fetchSleeps = async () => {
     try {
       const response = await SleepService.getAll();
@@ -68,9 +78,11 @@ export default function SleepsListView() {
                   <CardHeader>
                     <CardTitle>Сон {getDate(sleep.endTime)}</CardTitle>
                     <CardDescription>
-                      Заснули {dayjs(sleep.startTime).calendar().toLowerCase()}
+                      {getTimeEmoji(sleep.startTime)} Заснули{' '}
+                      {dayjs(sleep.startTime).calendar().toLowerCase()}
                       <br />
-                      Проснулись {dayjs(sleep.endTime).calendar().toLowerCase()}
+                      {getTimeEmoji(sleep.endTime)} Проснулись{' '}
+                      {dayjs(sleep.endTime).calendar().toLowerCase()}
                     </CardDescription>
                   </CardHeader>
                 </Card>
