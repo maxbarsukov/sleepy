@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 
 import { SleepSummaryDto } from '@/lib/dto/sleep-summary-dto';
 import SleepService from '@/lib/services/api/sleep-service';
+import { getDate, getTimeEmoji } from '@/lib/time';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DayjsContext } from '@/components/dayjs-provider';
@@ -15,25 +16,6 @@ export default function SleepsListView() {
 
   const [sleeps, setSleeps] = useState<SleepSummaryDto[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-
-  const getDate = (timestamp: string) => {
-    return dayjs(timestamp).calendar(null, {
-      lastWeek: 'D MMMM',
-      sameDay: 'сегодня',
-      lastDay: 'вчера',
-      sameElse: 'DD.MM.YYYY',
-    });
-  };
-
-  const getTimeEmoji = (timestamp: string) => {
-    const hour = dayjs(timestamp).hour();
-    if (hour >= 5 && hour < 8) return '🌅';
-    if (hour >= 8 && hour < 12) return '🌄';
-    if (hour >= 12 && hour < 17) return '🌇';
-    if (hour >= 17 && hour < 20) return '🌆';
-    if (hour >= 20 && hour < 23) return '🌃';
-    return '🌌';
-  };
 
   const fetchSleeps = async () => {
     try {
@@ -61,10 +43,10 @@ export default function SleepsListView() {
         </h1>
       </div>
 
-      <div className='mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3'>
+      <div className='mt-4 grid grid-cols-1 gap-6 sm:mt-12 sm:grid-cols-2 md:grid-cols-3'>
         {loading
           ? [...Array(6)].map((_, index) => (
-              <Card key={index}>
+              <Card key={index} className='hover:bg-secondary'>
                 <CardHeader>
                   <Skeleton className='mb-3 h-5 w-3/4 pb-6' />
                   <Skeleton className='mb-2 h-3 w-1/2' />
@@ -73,15 +55,15 @@ export default function SleepsListView() {
               </Card>
             ))
           : sleeps.map((sleep) => (
-              <Link key={sleep.sleepId} href={`/sleep/${sleep.sleepId}`}>
+              <Link key={sleep.sleepId} href={`/s/${sleep.sleepId}`}>
                 <Card className='hover:bg-secondary'>
                   <CardHeader>
-                    <CardTitle>Сон {getDate(sleep.endTime)}</CardTitle>
+                    <CardTitle>Сон {getDate(dayjs, sleep.endTime).toLowerCase()}</CardTitle>
                     <CardDescription>
-                      {getTimeEmoji(sleep.startTime)} Заснули{' '}
+                      {getTimeEmoji(dayjs, sleep.startTime)} Заснули{' '}
                       {dayjs(sleep.startTime).calendar().toLowerCase()}
                       <br />
-                      {getTimeEmoji(sleep.endTime)} Проснулись{' '}
+                      {getTimeEmoji(dayjs, sleep.endTime)} Проснулись{' '}
                       {dayjs(sleep.endTime).calendar().toLowerCase()}
                     </CardDescription>
                   </CardHeader>
