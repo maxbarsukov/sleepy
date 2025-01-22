@@ -21,4 +21,13 @@ export default class SleepService {
   static async getById(id: number): Promise<AxiosResponse<SleepDto>> {
     return api.get<SleepDto>(`/sleep/${id}`);
   }
+
+  /**
+   * Get a grouped sleep data for graph by ID
+   * @param {number} id Sleep ID
+   * @returns {Promise<AxiosResponse<boolean[]>>} Is sleeping is quick for each sleep data item
+   */
+  static async getGraphById(id: number): Promise<AxiosResponse<boolean[]>> {
+    return api.get<boolean[]>(`/sleep/${id}/graph`);
+  }
 }
