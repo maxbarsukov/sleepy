@@ -1,8 +1,13 @@
 'use client';
 
+import { Metadata } from 'next';
 import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
+
+export const metadata: Metadata = {
+  title: '404 | Sleepy',
+};
 
 export default function NotFound() {
   const router = useRouter();
