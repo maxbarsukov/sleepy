@@ -40,6 +40,11 @@ export default function SleepView() {
             .map((sleep: SleepItemDto, index) => ({ ...sleep, isQuick: graphResponse.data[index] }))
             .sort((a, b) => a.time.localeCompare(b?.time))
         );
+        console.log(
+          sleepResponse.data
+            .map((sleep: SleepItemDto, index) => ({ ...sleep, isQuick: graphResponse.data[index] }))
+            .sort((a, b) => a.time.localeCompare(b?.time))
+        );
       } catch (error) {
         console.error('Ошибка при загрузке сна', error);
         toast.error('Ошибка при загрузке сна', {
@@ -54,10 +59,14 @@ export default function SleepView() {
   }, [params]);
 
   if (sleep !== null && sleep.length === 0) {
-    document.title = '404 | Sleepy';
+    if (!loading) {
+      document.title = '404 | Sleepy';
+    }
     notFound();
   } else {
-    document.title = `${getDate(dayjs, sleep ? sleep[0].time : '')} | Sleepy`;
+    if (!loading) {
+      document.title = `${getDate(dayjs, sleep ? sleep[0].time : '')} | Sleepy`;
+    }
   }
 
   return (
@@ -120,7 +129,7 @@ export default function SleepView() {
             </>
           )}
         </Card>
-        {loading ? <SleepChartSkeleton /> : <SleepChart />}
+        {loading || !sleep ? <SleepChartSkeleton /> : <SleepChart data={sleep} />}
       </div>
     </div>
   );
